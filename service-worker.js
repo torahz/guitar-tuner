@@ -2,11 +2,10 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open('afinador-v1').then((cache) => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/gauge.png',
-        '/icon-192x192.png',
-        '/icon-512x512.png'
+        'index.html',
+        'gauge.png',
+        'icon-192x192.png',
+        'icon-512x512.png'
       ]);
     })
   );

@@ -12,10 +12,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #F2F2DB;
             color: #5A6D50;
             box-sizing: border-box;
@@ -62,12 +62,12 @@
             z-index: 3;
         }
         #credits {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 14px;
             color: #5A6D50;
         }
         #start {
-            margin-top: 20px;
+            margin-top: 10px;
             padding: 10px 20px;
             font-size: 16px;
             background-color: #5A6D50;
@@ -85,7 +85,7 @@
             cursor: not-allowed;
         }
         footer {
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
             font-size: 14px;
             color: #5A6D50;
@@ -115,8 +115,8 @@
     </footer>
 
     <script>
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const analyser = audioContext.createAnalyser();
+        let audioContext;
+        let analyser;
         const noteElement = document.getElementById('note');
         const frequencyElement = document.getElementById('frequency');
         const needleElement = document.getElementById('needle');
@@ -128,6 +128,8 @@
         const frequencies = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
 
         function startTuner() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then(stream => {
                     const source = audioContext.createMediaStreamSource(stream);
@@ -163,22 +165,80 @@
         }
 
         function autoCorrelate(buffer, sampleRate) {
-            // ... (mantenha a função autoCorrelate inalterada)
+            let sum = 0;
+            for (let i = 0; i < buffer.length; i++) {
+                sum += Math.abs(buffer[i]);
+            }
+            const threshold = 0.2;
+            if (sum <= threshold) return -1;
+
+            let r1 = 0, r2 = buffer.length - 1;
+            for (let i = 0; i < buffer.length / 2; i++) {
+                if (Math.abs(buffer[i]) > threshold) {
+                    r1 = i;
+                    break;
+                }
+            }
+            for (let i = 1; i < buffer.length / 2; i++) {
+                if (Math.abs(buffer[buffer.length - i]) > threshold) {
+                    r2 = buffer.length - i;
+                    break;
+                }
+            }
+
+            const bufferSlice = buffer.slice(r1, r2);
+            const c = new Array(bufferSlice.length).fill(0);
+            for (let i = 0; i < bufferSlice.length; i++) {
+                for (let j = 0; j < bufferSlice.length - i; j++) {
+                    c[i] += bufferSlice[j] * bufferSlice[j + i];
+                }
+            }
+
+            let d = 0;
+            while (c[d] > c[d + 1]) d++;
+            let maxval = -1, maxpos = -1;
+            for (let i = d; i < c.length; i++) {
+                if (c[i] > maxval) {
+                    maxval = c[i];
+                    maxpos = i;
+                }
+            }
+            let T0 = maxpos;
+
+            const interpolation = (c[T0 - 1] - c[T0 + 1]) / (2 * (2 * c[T0] - c[T0 - 1] - c[T0 + 1]));
+            return sampleRate / (T0 + interpolation);
         }
 
         function findClosestNote(frequency) {
-            // ... (mantenha a função findClosestNote inalterada)
+            let closestNote = notes[0];
+            let closestDiff = Math.abs(frequency - frequencies[0]);
+
+            for (let i = 1; i < notes.length; i++) {
+                const diff = Math.abs(frequency - frequencies[i]);
+                if (diff < closestDiff) {
+                    closestNote = notes[i];
+                    closestDiff = diff;
+                }
+            }
+
+            return closestNote;
         }
 
         function updateNeedle(detectedFrequency, targetFrequency) {
-            // ... (mantenha a função updateNeedle inalterada)
+            const cents = 1200 * Math.log2(detectedFrequency / targetFrequency);
+            const rotation = Math.max(Math.min(cents, 50), -50);
+            needleElement.style.transform = `rotate(${rotation}deg)`;
+
+            if (Math.abs(cents) < 5) {
+                tunerElement.style.backgroundColor = '#b5f178';
+            } else {
+                tunerElement.style.backgroundColor = '#fff';
+            }
         }
 
         startButton.addEventListener('click', () => {
-            audioContext.resume().then(() => {
-                startTuner();
-                startButton.disabled = true;
-            });
+            startTuner();
+            startButton.disabled = true;
         });
 
         pixKeyElement.addEventListener('click', (e) => {
@@ -195,7 +255,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
+          navigator.serviceWorker.register('service-worker.js')
             .then((reg) => console.log('Service worker registered.', reg))
             .catch((err) => console.log('Service worker registration failed:', err));
         });
