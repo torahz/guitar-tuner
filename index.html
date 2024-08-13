@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afinador Cromático</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F2F2DB">
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            justify-content: space-between;
+            min-height: 100vh;
             margin: 0;
-            background-color: #b8cad4;
+            padding: 20px;
+            background-color: #F2F2DB;
+            color: #5A6D50;
+            box-sizing: border-box;
         }
         #tuner {
             width: 300px;
@@ -42,7 +47,7 @@
         }
         #frequency {
             font-size: 24px;
-            color: #666;
+            color: #5A6D50;
             z-index: 2;
         }
         #needle {
@@ -59,7 +64,38 @@
         #credits {
             margin-top: 20px;
             font-size: 14px;
-            color: #333;
+            color: #5A6D50;
+        }
+        #start {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #5A6D50;
+            color: #F2F2DB;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #start:hover {
+            background-color: #4A5D40;
+        }
+        #start:disabled {
+            background-color: #9AA990;
+            cursor: not-allowed;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #5A6D50;
+        }
+        footer p {
+            margin: 5px 0;
+        }
+        footer a {
+            color: #5A6D50;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -70,8 +106,13 @@
         <div id="frequency">- Hz</div>
         <div id="needle"></div>
     </div>
-    <button id="start">Iniciar Afinador</button>
+    <button id="start">Start</button>
     <div id="credits">By NamelessReaper</div>
+    
+    <footer>
+        <p>Este app é livre de ads. Se ele te foi útil, você pode nos agradecer doando qualquer quantia em PIX para <a href="#" id="pix-key">nmlssrpr@proton.me</a></p>
+        <p>Instale este app clicando em menu > Adicionar à tela inicial e escolha a opção "Instalar".</p>
+    </footer>
 
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -81,6 +122,7 @@
         const needleElement = document.getElementById('needle');
         const tunerElement = document.getElementById('tuner');
         const startButton = document.getElementById('start');
+        const pixKeyElement = document.getElementById('pix-key');
 
         const notes = ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'];
         const frequencies = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
@@ -121,75 +163,15 @@
         }
 
         function autoCorrelate(buffer, sampleRate) {
-            let sum = 0;
-            for (let i = 0; i < buffer.length; i++) {
-                sum += Math.abs(buffer[i]);
-            }
-            const threshold = 0.2;
-            if (sum <= threshold) return -1;
-
-            let r1 = 0, r2 = buffer.length - 1;
-            for (let i = 0; i < buffer.length / 2; i++) {
-                if (Math.abs(buffer[i]) > threshold) {
-                    r1 = i;
-                    break;
-                }
-            }
-            for (let i = 1; i < buffer.length / 2; i++) {
-                if (Math.abs(buffer[buffer.length - i]) > threshold) {
-                    r2 = buffer.length - i;
-                    break;
-                }
-            }
-
-            const bufferSlice = buffer.slice(r1, r2);
-            const c = new Array(bufferSlice.length).fill(0);
-            for (let i = 0; i < bufferSlice.length; i++) {
-                for (let j = 0; j < bufferSlice.length - i; j++) {
-                    c[i] += bufferSlice[j] * bufferSlice[j + i];
-                }
-            }
-
-            let d = 0;
-            while (c[d] > c[d + 1]) d++;
-            let maxval = -1, maxpos = -1;
-            for (let i = d; i < c.length; i++) {
-                if (c[i] > maxval) {
-                    maxval = c[i];
-                    maxpos = i;
-                }
-            }
-            let T0 = maxpos;
-
-            const interpolation = (c[T0 - 1] - c[T0 + 1]) / (2 * (2 * c[T0] - c[T0 - 1] - c[T0 + 1]));
-            return sampleRate / (T0 + interpolation);
+            // ... (mantenha a função autoCorrelate inalterada)
         }
 
         function findClosestNote(frequency) {
-            let closestNote = notes[0];
-            let closestDiff = Math.abs(frequency - frequencies[0]);
-
-            for (let i = 1; i < notes.length; i++) {
-                const diff = Math.abs(frequency - frequencies[i]);
-                if (diff < closestDiff) {
-                    closestNote = notes[i];
-                    closestDiff = diff;
-                }
-            }
-
-            return closestNote;
+            // ... (mantenha a função findClosestNote inalterada)
         }
 
         function updateNeedle(detectedFrequency, targetFrequency) {
-            const cents = 1200 * Math.log2(detectedFrequency / targetFrequency);
-            const rotation = Math.max(Math.min(cents, 50), -50);
-            needleElement.style.transform = `rotate(${rotation}deg)`;
-
-            if (Math.abs(cents) < 5) { // Margem de 5 cents para considerar afinado
-                tunerElement.style.backgroundColor = '#b5f178';
-            } else {
-                tunerElement.style.backgroundColor = '#fff';
-            }
+            // ... (mantenha a função updateNeedle inalterada)
         }
 
         startButton.addEventListener('click', () => {
@@ -198,6 +180,26 @@
                 startButton.disabled = true;
             });
         });
+
+        pixKeyElement.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pixKey = "00020126650014br.gov.bcb.pix0118nmlssrpr@proton.me0221qualquer valor ajuda!5204000053039865802BR5919Rafael Lopes Ferraz6008Brasilia62090505gqiu56304A51C";
+            navigator.clipboard.writeText(pixKey).then(() => {
+                alert('Chave PIX copiada para a área de transferência!');
+            }).catch(err => {
+                console.error('Erro ao copiar a chave PIX:', err);
+            });
+        });
+    </script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then((reg) => console.log('Service worker registered.', reg))
+            .catch((err) => console.log('Service worker registration failed:', err));
+        });
+      }
     </script>
 </body>
 </html>
