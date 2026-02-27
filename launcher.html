@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afinador Pro - Launcher</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 28px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .error-icon {
+            font-size: 48px;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        .success-icon {
+            font-size: 48px;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        button.secondary {
+            background: #95a5a6;
+        }
+        
+        button.secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .code-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon">⚠️</div>
+        <h1>Problema Detectado!</h1>
+        
+        <div class="warning">
+            <strong>Erro de CORS:</strong> Você está abrindo o arquivo localmente (file://)<br>
+            Isso impede o funcionamento correto do afinador e causa erros de dependência.
+        </div>
+        
+        <div class="step">
+            <strong>Passo 1:</strong> Abra o terminal (Command Prompt ou PowerShell)
+        </div>
+        
+        <div class="step">
+            <strong>Passo 2:</strong> Navegue até a pasta do projeto:
+            <div class="code-box">cd "D:\Python Projects\guitar-tuner\guitar-tuner"</div>
+        </div>
+        
+        <div class="step">
+            <strong>Passo 3:</strong> Inicie o servidor local:
+            <div class="code-box">python server.py</div>
+        </div>
+        
+        <div class="step">
+            <strong>Passo 4:</strong> Abra o navegador e acesse:
+            <div class="code-box">http://localhost:8000/index.html</div>
+        </div>
+        
+        <button onclick="openTerminal()">Abrir Terminal (Windows)</button>
+        <button class="secondary" onclick="window.open('quick-start.html', '_blank')">Ver Guia Completo</button>
+        
+        <div style="margin-top: 20px; color: #7f8c8d; font-size: 14px;">
+            <p>⚠️ <strong>Importante:</strong> Não abra o index.html diretamente</p>
+            <p>Use sempre o servidor local para evitar problemas!</p>
+        </div>
+    </div>
+
+    <script>
+        // Verifica se está abrindo localmente
+        if (window.location.protocol !== 'file:') {
+            // Já está usando servidor, redireciona para o afinador
+            window.location.href = 'index.html';
+        }
+        
+        function openTerminal() {
+            if (confirm('Isso abrirá o terminal na pasta do projeto.\n\nCertifique-se de ter Python instalado.\n\nDeseja continuar?')) {
+                try {
+                    // Tenta abrir o terminal via ActiveXObject (Windows)
+                    const shell = new ActiveXObject("WScript.Shell");
+                    shell.Run("cmd.exe /K cd \"D:\\Python Projects\\guitar-tuner\\guitar-tuner\" && python server.py");
+                } catch (e) {
+                    alert('Não foi possível abrir o terminal automaticamente.\n\nPor favor, siga os passos manualmente:\n\n1. Abra o terminal\n2. Navegue até: D:\\Python Projects\\guitar-tuner\\guitar-tuner\n3. Execute: python server.py');
+                }
+            }
+        }
+        
+        // Se estiver no Chrome/Edge, oferece ajuda extra
+        if (navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Edge')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const helpBtn = document.createElement('button');
+                helpBtn.className = 'secondary';
+                helpBtn.textContent = 'Ajuda Visual';
+                helpBtn.onclick = () => {
+                    alert('Para usar o afinador corretamente:\n\n1. Feche esta janela\n2. Abra o terminal (cmd)\n3. Navegue até a pasta do projeto\n4. Execute: python server.py\n5. Abra: http://localhost:8000/index.html\n\nIsso resolverá todos os problemas de CORS e dependência!');
+                };
+                document.querySelector('.container').appendChild(helpBtn);
+            });
+        }
+    </script>
+</body>
+</html>

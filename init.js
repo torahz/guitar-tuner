@@ -119,6 +119,21 @@ function loadModules() {
         }
     });
     
+    // Verifica métodos críticos do UI
+    if (typeof UI !== 'undefined') {
+        const uiMethods = ['showToast', 'startTuner', 'stopTuner', 'updateTunerDisplay'];
+        uiMethods.forEach(method => {
+            const exists = typeof UI[method] === 'function';
+            console.log(`    ${exists ? '✓' : '❌'} UI.${method}: ${exists ? 'Disponível' : 'Indisponível'}`);
+            if (!exists) {
+                allModulesLoaded = false;
+            }
+        });
+    } else {
+        console.log('    ❌ UI: Não carregado');
+        allModulesLoaded = false;
+    }
+    
     if (!allModulesLoaded) {
         console.error('❌ Módulos críticos não carregados. Verifique os arquivos JavaScript.');
         showErrorMessage('Erro ao carregar módulos do afinador. Por favor, recarregue a página.');

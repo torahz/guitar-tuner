@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afinador Pro - Quick Start</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f3f4f6;
+            color: #333;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 { color: #2563eb; margin-top: 0; }
+        h2 { color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .status.ok { color: #10b981; }
+        .status.error { color: #ef4444; }
+        .status.warn { color: #f59e0b; }
+        
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        button:hover { background: #1d4ed8; }
+        
+        .code {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Afinador Pro - Quick Start</h1>
+    
+    <div class="card">
+        <h2>Problemas Identificados</h2>
+        <div class="status error">
+            <span>❌</span>
+            <div>
+                <strong>Erros de dependência:</strong><br>
+                - UI.showToast não disponível<br>
+                - Tuner.updateConfig não é função<br>
+                - Erros de CORS ao abrir localmente
+            </div>
+        </div>
+        
+        <div class="status warn">
+            <span>⚠️</span>
+            <div>
+                <strong>Solução recomendada:</strong><br>
+                Use o servidor local para evitar problemas de CORS
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>🔧 Solução Rápida</h2>
+        
+        <h3>Opção 1: Servidor Local (RECOMENDADO)</h3>
+        <p>Abra o terminal na pasta do projeto e execute:</p>
+        <div class="code">
+            # No terminal, na pasta do projeto:
+            python server.py
+        </div>
+        <p>Ou se preferir usar o servidor embutido do Python:</p>
+        <div class="code">
+            # Alternativa:
+            python -m http.server 8000
+        </div>
+        <button onclick="startLocalServer()">Iniciar Servidor Local</button>
+        
+        <h3>Opção 2: Servidor Node.js (se tiver npm)</h3>
+        <div class="code">
+            # Se tiver Node.js instalado:
+            npx http-server -p 8000
+        </div>
+        
+        <h3>Opção 3: Live Server (VS Code)</h3>
+        <p>Se estiver usando VS Code, instale a extensão "Live Server" e clique em "Go Live"</p>
+    </div>
+    
+    <div class="card">
+        <h2>📋 Instruções de Uso</h2>
+        
+        <h3>1. Microfone</h3>
+        <p>Permita o acesso ao microfone quando solicitado</p>
+        
+        <h3>2. Detecção Automática</h3>
+        <p>O afinador detectará automaticamente:</p>
+        <ul>
+            <li>A frequência da nota tocada</li>
+            <li>Qual corda está sendo afinada (E, A, D, G, B, E)</li>
+            <li>Se está afinada ou desafinada</li>
+        </ul>
+        
+        <h3>3. Como Afinar</h3>
+        <ol>
+            <li>Toque a corda</li>
+            <li>Observe a agulha no display</li>
+            <li>Se a agulha estiver no centro = afinada</li>
+            <li>Se estiver para a esquerda = afine para baixo (solte a tensão)</li>
+            <li>Se estiver para a direita = afine para cima (aumente a tensão)</li>
+        </ol>
+    </div>
+    
+    <div class="card">
+        <h2>🎯 Dicas</h2>
+        <div class="grid">
+            <div>
+                <h4>Para melhores resultados:</h4>
+                <ul>
+                    <li>Toque as cordas com força suficiente</li>
+                    <li>Evite ruídos de fundo</li>
+                    <li>Mantenha o microfone próximo ao instrumento</li>
+                    <li>Toque uma corda de cada vez</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Problemas comuns:</h4>
+                <ul>
+                    <li>Sem som detectado: Verifique o microfone</li>
+                    <li>Notas erradas: Reduza ruídos de fundo</li>
+                    <li>Agulha instável: Toque a corda com mais força</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>🔧 Solução de Problemas</h2>
+        
+        <h3>Problema: "UI.showToast is not a function"</h3>
+        <p><strong>Solução:</strong> Use o servidor local (Opção 1 acima)</p>
+        
+        <h3>Problema: Microfone não funciona</h3>
+        <p><strong>Solução:</strong></p>
+        <ul>
+            <li>Verifique as permissões do navegador</li>
+            <li>Teste o microfone em outro site</li>
+            <li>Reinicie o navegador</li>
+        </ul>
+        
+        <h3>Problema: Notas não são detectadas</h3>
+        <p><strong>Solução:</strong></p>
+        <ul>
+            <li>Aumente o volume da guitarra</li>
+            <li>Mantenha o microfone mais próximo</li>
+            <li>Reduza ruídos de fundo</li>
+            <li>Toque as cordas com mais força</li>
+        </ul>
+    </div>
+    
+    <div class="card">
+        <h2>📁 Arquivos do Projeto</h2>
+        <div class="grid">
+            <div>
+                <h4>Essenciais:</h4>
+                <ul>
+                    <li>index.html - Página principal</li>
+                    <li>js/tuner.js - Lógica de detecção</li>
+                    <li>js/ui.js - Interface</li>
+                    <li>js/app.js - Aplicação</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Extras:</h4>
+                <ul>
+                    <li>server.py - Servidor local</li>
+                    <li>test-toast.html - Teste de toast</li>
+                    <li>test-debug.html - Teste de debug</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startLocalServer() {
+            alert('Para iniciar o servidor local:\n\n1. Abra o terminal\n2. Navegue até a pasta do projeto\n3. Execute: python server.py\n\nOu alternativamente: python -m http.server 8000');
+        }
+        
+        // Verifica se está abrindo localmente (file://)
+        if (window.location.protocol === 'file:') {
+            document.addEventListener('DOMContentLoaded', () => {
+                const warning = document.createElement('div');
+                warning.className = 'card';
+                warning.innerHTML = `
+                    <div class="status warn">
+                        <span>⚠️</span>
+                        <div>
+                            <strong>Atenção:</strong> Você está abrindo o arquivo localmente (file://)<br>
+                            Isso pode causar problemas de CORS e dependências.<br>
+                            <strong>Recomenda-se usar o servidor local.</strong>
+                        </div>
+                    </div>
+                `;
+                document.body.insertBefore(warning, document.body.firstChild);
+            });
+        }
+    </script>
+</body>
+</html>

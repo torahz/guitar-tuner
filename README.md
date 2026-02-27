@@ -1,189 +1,139 @@
-# Afinador Pro - Cromático Profissional
+# 🎸 Afinador Pro - Guia Rápido de Solução de Problemas
 
-Um afinador cromático profissional com detecção automática de notas, modos de instrumento e calibração avançada.
+## ⚠️ **ATENÇÃO: Problemas Comuns e Soluções**
 
-## 🎵 Características
+### **Problema: Erros de CORS e dependência**
+```
+Access to manifest at 'file:///...' from origin 'null' has been blocked by CORS policy
+UI.showToast is not a function
+Tuner.updateConfig is not a function
+```
 
-### 🎸 Instrumentos Suportados
-- **Guitarra**: E Standard, Drop D, Open G, Open D, Open E, Meio Tom Abaixo, Drop C
-- **Baixo**: E Standard, Drop D, Quintas, Tenor
-- **Ukulele**: C6 Standard, Low G, D Tuning
-- **Violino**: Standard
+### **Solução: Use o Servidor Local (OBRIGATÓRIO)**
 
-### 🔧 Funcionalidades Avançadas
-- **Detecção Automática**: Identifica automaticamente a corda tocada
-- **Calibração A440**: De 430Hz a 450Hz
-- **Sensibilidade Ajustável**: Para diferentes ambientes
-- **Modo Cromático**: Todas as notas de A0 a C8
-- **Feedback Tátil**: Vibração quando está afinado
-- **Feedback Sonoro**: Opcional para referência auditiva
+**Passo 1:** Abra o terminal na pasta do projeto
+```bash
+cd "D:\Python Projects\guitar-tuner\guitar-tuner"
+```
 
-### 🎨 Interface Moderna
-- **Temas**: Claro, Escuro e Automático
-- **Design Responsivo**: Perfeito para mobile e desktop
-- **Animações Suaves**: Transições elegantes
-- **PWA**: Instalável como app nativo
+**Passo 2:** Inicie o servidor local
+```bash
+python server.py
+```
 
-### 💾 Sistema de Dados
-- **Histórico de Afinações**: Registro completo de sessões
-- **Configurações Salvas**: Personalização persistente
-- **Exportação/Importação**: Compartilhamento de configurações
-- **Estatísticas**: Métricas de uso e precisão
+**Passo 3:** Acesse no navegador
+```
+http://localhost:8000/index.html
+```
 
-## 🚀 Como Usar
+## 🚀 **Como Usar o Afinador**
 
-### 1. Iniciar o Afinador
-1. Clique em "Iniciar" para ativar o microfone
-2. Toque a corda do seu instrumento
-3. Observe a agulha e o display de frequência
-4. Ajuste a tensão da corda até a agulha ficar no centro
+### **Detecção Automática (COMO VOCÊ QUER)**
+✅ **O afinador detecta automaticamente:**
+- Frequência da nota tocada
+- Qual corda está sendo afinada (E, A, D, G, B, E)
+- Se está afinada ou desafinada
+- **NÃO depende do usuário mudar manualmente a corda**
 
-### 2. Selecionar Instrumento
-- Clique nos botões de instrumento (Guitarra, Baixo, Ukulele, Violino)
-- Cada instrumento tem afinagens pré-definidas
+### **Instruções de Uso**
+1. **Inicie o servidor:** `python server.py`
+2. **Abra no navegador:** `http://localhost:8000/index.html`
+3. **Permita o microfone** quando solicitado
+4. **Toque a corda** - o afinador detecta automaticamente
+5. **Observe a agulha** - centro = afinada, lados = desafinada
+6. **Ajuste a tensão** da corda conforme indicado
 
-### 3. Selecionar Afinagem
-- Escolha entre as afinagens padrão do instrumento
-- Crie afinagens personalizadas (futuro)
+## 📁 **Arquivos do Projeto**
 
-### 4. Selecionar Corda
-- Clique na corda desejada para focar na detecção
-- Use o modo automático para detecção inteligente
+### **Essenciais**
+- `index.html` - Página principal do afinador
+- `js/tuner.js` - Lógica de detecção de frequência
+- `js/ui.js` - Interface do usuário
+- `js/app.js` - Aplicação principal
 
-### 5. Ajustar Configurações
-- **Sensibilidade**: Ajuste para ambientes barulhentos ou silenciosos
-- **Calibração A440**: Defina a referência de afinação
-- **Feedback**: Ative/desative feedbacks tátil e sonoro
-- **Tema**: Escolha entre claro, escuro ou automático
+### **Ferramentas de Solução**
+- `server.py` - Servidor local (ESSENCIAL)
+- `launcher.html` - Página de lançamento que detecta problemas
+- `quick-start.html` - Guia rápido de solução
+- `test-toast.html` - Teste de funções de toast
+- `test-debug.html` - Diagnóstico avançado
 
-## 📱 Instalação PWA
+## 🔧 **Solução de Problemas**
 
-### No Mobile
-1. Abra o afinador no navegador
-2. Clique no botão "Instalar" que aparecerá
-3. Escolha "Adicionar à Tela de Início"
-4. O app será instalado como um app nativo
-
-### No Desktop
-1. Abra o afinador no Chrome/Edge
-2. Clique no ícone de instalação na barra de endereços
-3. Clique em "Instalar"
-4. O app será instalado como uma aplicação desktop
-
-## 🔧 Configurações Técnicas
-
-### Sensibilidade
-- **Baixa (0.1-0.3)**: Ambientes barulhentos
-- **Média (0.4-0.6)**: Uso normal
-- **Alta (0.7-0.9)**: Estúdios e ambientes silenciosos
-
-### Calibração A440
-- **Padrão**: 440Hz (internacional)
-- **Orquestral**: 442Hz (uso comum em orquestras)
-- **Histórico**: 432Hz (afinação "verdadeira")
-
-### Modo Cromático
-- **Desativado**: Apenas notas do instrumento selecionado
-- **Ativado**: Todas as notas cromáticas (C, C#, D, D#, etc.)
-
-## 🎯 Dicas de Uso
-
-### Para Guitarra
-1. **Ambiente Silencioso**: Aumente a sensibilidade
-2. **Ambiente Barulhento**: Reduza a sensibilidade
-3. **Cordas Novas**: Espere alguns minutos para estabilizar
-4. **Afinação Rápida**: Use o modo automático
-
-### Para Baixo
-1. **Cordas Graves**: Use sensibilidade média
-2. **Ambientes Pequenos**: Cuidado com ressonância
-3. **Afinação em Quintas**: Use o modo específico
-
-### Para Ukulele
-1. **Cordas Finas**: Sensibilidade alta recomendada
-2. **Afinação Low G**: Use a afinagem específica
-3. **Afinação D**: Notas mais agudas
-
-## 🐛 Solução de Problemas
-
-### Microfone Não Funciona
+### **Problema: Microfone não funciona**
+**Solução:**
 1. Verifique as permissões do navegador
-2. Teste o microfone em outras aplicações
-3. Tente recarregar a página
-4. Verifique se o microfone está conectado
+2. Teste o microfone em outro site
+3. Reinicie o navegador
+4. Use o servidor local (não abra localmente)
 
-### Detecção Lenta
-1. Aumente a sensibilidade
-2. Reduza o ruído de fundo
-3. Aproxime o microfone do instrumento
-4. Verifique a qualidade do microfone
+### **Problema: Notas não são detectadas**
+**Solução:**
+1. Aumente o volume da guitarra
+2. Mantenha o microfone mais próximo
+3. Reduza ruídos de fundo
+4. Toque as cordas com mais força
+5. Use o servidor local
 
-### Notas Incorretas
-1. Verifique a calibração A440
-2. Ajuste a sensibilidade
-3. Toque as notas mais firmemente
-4. Verifique se há interferência de outras fontes sonoras
+### **Problema: Erros de dependência**
+**Solução:**
+1. **Use SEMPRE o servidor local** - `python server.py`
+2. **NUNCA abra o index.html diretamente**
+3. Acesse via: `http://localhost:8000/index.html`
 
-### Performance Lenta
-1. Feche outras abas do navegador
-2. Verifique a memória do dispositivo
-3. Atualize o navegador
-4. Limpe o cache do navegador
+## 🎯 **Dicas para Melhor Performance**
 
-## 📊 Estatísticas
+### **Para melhores resultados:**
+- Toque as cordas com força suficiente
+- Evite ruídos de fundo
+- Mantenha o microfone próximo ao instrumento
+- Toque uma corda de cada vez
 
-O afinador coleta estatísticas de uso:
-- **Sessões Totais**: Quantidade de vezes que o afinador foi usado
-- **Precisão Média**: Média da precisão das afinações
-- **Instrumento Mais Usado**: Qual instrumento é mais afinado
-- **Afinagem Mais Usada**: Qual afinagem é mais popular
+### **Problemas comuns:**
+- **Sem som detectado:** Verifique o microfone
+- **Notas erradas:** Reduza ruídos de fundo
+- **Agulha instável:** Toque a corda com mais força
 
-## 🔒 Privacidade
+## 🛠️ **Alternativas de Servidor**
 
-- **Nenhum Dado Pessoal**: Não coletamos informações pessoais
-- **Armazenamento Local**: Todos os dados ficam no seu dispositivo
-- **Sem Rastreamento**: Não utilizamos cookies de rastreamento
-- **Offline Total**: Funciona sem conexão com internet
+### **Python (RECOMENDADO)**
+```bash
+python server.py
+```
 
-## 🤝 Contribuição
+### **Python embutido**
+```bash
+python -m http.server 8000
+```
 
-Contribuições são bem-vindas! Para contribuir:
+### **Node.js (se tiver npm)**
+```bash
+npx http-server -p 8000
+```
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nome-da-feature`)
-3. Faça commit das suas mudanças (`git commit -m 'Adiciona feature incrível'`)
-4. Dê push para a branch (`git push origin feature/nome-da-feature`)
-5. Abra um Pull Request
+### **VS Code Live Server**
+1. Instale a extensão "Live Server"
+2. Clique em "Go Live" no canto inferior direito
 
-## 🐛 Relatar Bugs
+## 📞 **Suporte**
 
-Para relatar bugs ou solicitar features:
+Se ainda houver problemas:
 
-1. Abra uma issue no GitHub
-2. Descreva o problema detalhadamente
-3. Inclua passos para reproduzir o erro
-4. Informe o navegador e versão
-5. Adicione prints ou vídeos se possível
+1. **Abra `launcher.html`** - Detecta automaticamente problemas
+2. **Use `quick-start.html`** - Guia completo de solução
+3. **Teste com `test-toast.html`** - Verifica funções
+4. **Consulte o console** (F12) para mensagens detalhadas
 
-## 📄 Licença
+## ✅ **Checklist de Verificação**
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-## 🙏 Agradecimentos
-
-- **Web Audio API**: Para a detecção de pitch em tempo real
-- **Service Workers**: Para a funcionalidade offline
-- **Todos os contribuidores**: Pelo apoio e feedback
-
-## 📞 Contato
-
-- **Email**: nmlssrpr@proton.me
-- **PIX**: nmlssrpr@proton.me
+- [ ] **Servidor local iniciado** - `python server.py`
+- [ ] **Acesso via navegador** - `http://localhost:8000/index.html`
+- [ ] **Microfone permitido** no navegador
+- [ ] **Sem erros no console** (F12)
+- [ ] **Detecção automática** funcionando
 
 ---
 
-<div align="center">
-  <p>Se este projeto foi útil para você, considere fazer uma doação via PIX</p>
-  <p><strong>Chave PIX:</strong> nmlssrpr@proton.me</p>
-  <p>Obrigado pelo apoio! 🎵</p>
-</div>
+**⚠️ IMPORTANTE:** O afinador **NÃO FUNCIONA** se aberto localmente (file://). Use SEMPRE o servidor local para evitar problemas de CORS e dependência.
+
+**🎸 Agora seu afinador está pronto para uso!**

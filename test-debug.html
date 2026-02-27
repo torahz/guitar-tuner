@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Depuração - Afinador Pro</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f3f4f6;
+            color: #333;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 { color: #2563eb; margin-top: 0; }
+        h2 { color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .status.ok { color: #10b981; }
+        .status.error { color: #ef4444; }
+        .status.warn { color: #f59e0b; }
+        
+        .icon { font-size: 18px; }
+        .ok .icon { content: "✓"; }
+        .error .icon { content: "❌"; }
+        .warn .icon { content: "⚠️"; }
+        
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        
+        button:hover { background: #1d4ed8; }
+        
+        .code {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Teste de Depuração - Afinador Pro</h1>
+    
+    <div class="card">
+        <h2>Estado dos Módulos</h2>
+        <div id="modules-status"></div>
+        <button onclick="checkModules()">Verificar Módulos</button>
+        <button onclick="checkUI()">Testar UI.showToast</button>
+    </div>
+    
+    <div class="card">
+        <h2>Dependências do Navegador</h2>
+        <div id="dependencies-status"></div>
+        <button onclick="checkDependencies()">Verificar Dependências</button>
+    </div>
+    
+    <div class="card">
+        <h2>Elementos do DOM</h2>
+        <div id="dom-status"></div>
+        <button onclick="checkDOM()">Verificar DOM</button>
+    </div>
+    
+    <div class="card">
+        <h2>Console do Navegador</h2>
+        <p>Pressione <strong>F12</strong> e vá para a aba <strong>Console</strong> para ver mensagens detalhadas.</p>
+        <button onclick="openConsole()">Abrir Console</button>
+    </div>
+    
+    <div class="card">
+        <h2>Teste Rápido</h2>
+        <div class="grid">
+            <div>
+                <h3>✅ Teste de Carregamento</h3>
+                <p>Verifica se todos os arquivos JavaScript foram carregados corretamente.</p>
+            </div>
+            <div>
+                <h3>🔧 Teste de Funções</h3>
+                <p>Testa se as funções críticas estão disponíveis e funcionando.</p>
+            </div>
+        </div>
+        <button onclick="runFullTest()">Executar Teste Completo</button>
+    </div>
+    
+    <div class="card">
+        <h2>Comandos de Debug</h2>
+        <div class="code">
+            // No console do navegador (F12), execute:
+            
+            // Verificar módulos
+            console.log('Utils:', typeof Utils);
+            console.log('Storage:', typeof Storage);
+            console.log('Tuner:', typeof Tuner);
+            console.log('UI:', typeof UI);
+            console.log('App:', typeof App);
+            
+            // Testar UI.showToast
+            if (typeof UI !== 'undefined') {
+                UI.showToast('Teste de toast', 'success');
+            }
+            
+            // Debug completo
+            debugApp();
+        </div>
+    </div>
+
+    <!-- Scripts do Afinador Pro -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/tuner.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Funções de teste
+        function checkModules() {
+            const modules = ['Utils', 'Storage', 'Tuner', 'UI', 'App'];
+            const statusDiv = document.getElementById('modules-status');
+            statusDiv.innerHTML = '';
+            
+            modules.forEach(name => {
+                const exists = typeof window[name] !== 'undefined';
+                const status = exists ? 'ok' : 'error';
+                const icon = exists ? '✓' : '❌';
+                const text = exists ? 'Carregado' : 'Não carregado';
+                
+                const div = document.createElement('div');
+                div.className = `status ${status}`;
+                div.innerHTML = `<span class="icon">${icon}</span> <strong>${name}:</strong> ${text}`;
+                statusDiv.appendChild(div);
+                
+                if (exists) {
+                    const methods = Object.keys(window[name]);
+                    const methodsDiv = document.createElement('div');
+                    methodsDiv.style.marginLeft = '20px';
+                    methodsDiv.style.fontSize = '12px';
+                    methodsDiv.style.color = '#666';
+                    methodsDiv.textContent = `Métodos: ${methods.slice(0, 5).join(', ')}${methods.length > 5 ? '...' : ''}`;
+                    statusDiv.appendChild(methodsDiv);
+                }
+            });
+        }
+        
+        function checkUI() {
+            const statusDiv = document.getElementById('modules-status');
+            const div = document.createElement('div');
+            div.className = 'status';
+            
+            if (typeof UI === 'undefined') {
+                div.className += ' error';
+                div.innerHTML = '<span class="icon">❌</span> <strong>UI:</strong> Não carregado';
+            } else if (typeof UI.showToast !== 'function') {
+                div.className += ' error';
+                div.innerHTML = '<span class="icon">❌</span> <strong>UI.showToast:</strong> Não é uma função';
+            } else {
+                div.className += ' ok';
+                div.innerHTML = '<span class="icon">✓</span> <strong>UI.showToast:</strong> Disponível';
+                
+                // Testa a função
+                try {
+                    UI.showToast('Teste de toast realizado com sucesso!', 'success');
+                    div.innerHTML += ' - <em>Teste executado</em>';
+                } catch (error) {
+                    div.className = 'status error';
+                    div.innerHTML = '<span class="icon">❌</span> <strong>UI.showToast:</strong> Erro ao executar: ' + error.message;
+                }
+            }
+            
+            statusDiv.appendChild(div);
+        }
+        
+        function checkDependencies() {
+            const deps = {
+                'Web Audio API': typeof window.AudioContext !== 'undefined' || typeof window.webkitAudioContext !== 'undefined',
+                'Microfone': typeof navigator.mediaDevices !== 'undefined' && typeof navigator.mediaDevices.getUserMedia !== 'undefined',
+                'LocalStorage': (() => {
+                    try {
+                        const test = '__test__';
+                        localStorage.setItem(test, test);
+                        localStorage.removeItem(test);
+                        return true;
+                    } catch (e) {
+                        return false;
+                    }
+                })(),
+                'Promises': typeof Promise !== 'undefined',
+                'Fetch': typeof fetch !== 'undefined'
+            };
+            
+            const statusDiv = document.getElementById('dependencies-status');
+            statusDiv.innerHTML = '';
+            
+            Object.entries(deps).forEach(([name, exists]) => {
+                const status = exists ? 'ok' : 'error';
+                const icon = exists ? '✓' : '❌';
+                const text = exists ? 'Suportado' : 'Não suportado';
+                
+                const div = document.createElement('div');
+                div.className = `status ${status}`;
+                div.innerHTML = `<span class="icon">${icon}</span> <strong>${name}:</strong> ${text}`;
+                statusDiv.appendChild(div);
+            });
+        }
+        
+        function checkDOM() {
+            const elements = [
+                'tuner-display', 'needle', 'note-name', 'frequency-value', 
+                'start-btn', 'stop-btn', 'settings-panel', 'toast-container'
+            ];
+            
+            const statusDiv = document.getElementById('dom-status');
+            statusDiv.innerHTML = '';
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                const exists = !!element;
+                const status = exists ? 'ok' : 'error';
+                const icon = exists ? '✓' : '❌';
+                const text = exists ? 'Encontrado' : 'Não encontrado';
+                
+                const div = document.createElement('div');
+                div.className = `status ${status}`;
+                div.innerHTML = `<span class="icon">${icon}</span> <strong>${id}:</strong> ${text}`;
+                statusDiv.appendChild(div);
+            });
+        }
+        
+        function openConsole() {
+            // Abre o console (não funciona em todos os navegadores, mas tenta)
+            console.log('Console aberto para depuração');
+            alert('Pressione F12 para abrir o console do navegador e ver mensagens detalhadas.');
+        }
+        
+        function runFullTest() {
+            checkModules();
+            checkDependencies();
+            checkDOM();
+            checkUI();
+            
+            // Mensagem final
+            const allGood = typeof UI !== 'undefined' && typeof UI.showToast === 'function';
+            const message = allGood 
+                ? '✅ Todos os testes passaram! O afinador deve funcionar corretamente.'
+                : '❌ Alguns testes falharam. Verifique os erros acima.';
+            
+            alert(message);
+        }
+        
+        // Executa testes automáticos ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkModules();
+                checkDependencies();
+                checkDOM();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

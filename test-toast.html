@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Toast - Afinador Pro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 { color: #2563eb; }
+        h2 { color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        
+        .status.ok { color: #10b981; }
+        .status.error { color: #ef4444; }
+        
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        
+        button:hover { background: #1d4ed8; }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .toast {
+            background: #374151;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .toast.warning { background: #f59e0b; }
+        .toast.info { background: #3b82f6; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de Toast - Afinador Pro</h1>
+    
+    <div class="card">
+        <h2>Estado dos Módulos</h2>
+        <div id="status"></div>
+        <button onclick="checkModules()">Verificar Módulos</button>
+        <button onclick="testToast()">Testar Toast</button>
+        <button onclick="testGlobalToast()">Testar Toast Global</button>
+    </div>
+    
+    <div class="card">
+        <h2>Testes Rápidos</h2>
+        <button onclick="testAllToastTypes()">Testar Todos os Tipos</button>
+        <button onclick="testUIExists()">Verificar UI</button>
+        <button onclick="testUIFunctions()">Verificar Funções UI</button>
+    </div>
+    
+    <div class="card">
+        <h2>Console</h2>
+        <p>Abra o console (F12) para ver mensagens detalhadas.</p>
+        <button onclick="openConsole()">Abrir Console</button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts do Afinador Pro -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/tuner.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Funções de teste
+        function checkModules() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '';
+            
+            const modules = ['Utils', 'Storage', 'Tuner', 'UI', 'App'];
+            modules.forEach(name => {
+                const exists = typeof window[name] !== 'undefined';
+                const status = exists ? 'ok' : 'error';
+                const icon = exists ? '✓' : '❌';
+                const text = exists ? 'Carregado' : 'Não carregado';
+                
+                const div = document.createElement('div');
+                div.className = `status ${status}`;
+                div.innerHTML = `<span>${icon}</span> <strong>${name}:</strong> ${text}`;
+                statusDiv.appendChild(div);
+                
+                if (exists) {
+                    const methods = Object.keys(window[name]);
+                    const methodsDiv = document.createElement('div');
+                    methodsDiv.style.marginLeft = '20px';
+                    methodsDiv.style.fontSize = '12px';
+                    methodsDiv.style.color = '#666';
+                    methodsDiv.textContent = `Métodos: ${methods.slice(0, 5).join(', ')}${methods.length > 5 ? '...' : ''}`;
+                    statusDiv.appendChild(methodsDiv);
+                }
+            });
+        }
+        
+        function testToast() {
+            const statusDiv = document.getElementById('status');
+            const div = document.createElement('div');
+            div.className = 'status';
+            
+            if (typeof UI === 'undefined') {
+                div.className += ' error';
+                div.innerHTML = '❌ UI não carregado';
+                statusDiv.appendChild(div);
+                return;
+            }
+            
+            if (typeof UI.showToast !== 'function') {
+                div.className += ' error';
+                div.innerHTML = '❌ UI.showToast não é uma função';
+                statusDiv.appendChild(div);
+                return;
+            }
+            
+            div.className += ' ok';
+            div.innerHTML = '✅ UI.showToast disponível';
+            statusDiv.appendChild(div);
+            
+            // Testa a função
+            try {
+                UI.showToast('Teste de toast realizado com sucesso!', 'success');
+                div.innerHTML += ' - <em>Teste executado</em>';
+            } catch (error) {
+                div.className = 'status error';
+                div.innerHTML = `❌ UI.showToast: Erro ao executar - ${error.message}`;
+            }
+        }
+        
+        function testGlobalToast() {
+            const statusDiv = document.getElementById('status');
+            const div = document.createElement('div');
+            div.className = 'status';
+            
+            if (typeof window.showToast !== 'function') {
+                div.className += ' error';
+                div.innerHTML = '❌ window.showToast não é uma função';
+                statusDiv.appendChild(div);
+                return;
+            }
+            
+            div.className += ' ok';
+            div.innerHTML = '✅ window.showToast disponível';
+            statusDiv.appendChild(div);
+            
+            // Testa a função
+            try {
+                window.showToast('Teste de toast global!', 'info');
+                div.innerHTML += ' - <em>Teste executado</em>';
+            } catch (error) {
+                div.className = 'status error';
+                div.innerHTML = `❌ window.showToast: Erro ao executar - ${error.message}`;
+            }
+        }
+        
+        function testAllToastTypes() {
+            const types = ['success', 'error', 'warning', 'info'];
+            types.forEach(type => {
+                setTimeout(() => {
+                    if (typeof UI !== 'undefined' && typeof UI.showToast === 'function') {
+                        UI.showToast(`Toast de tipo: ${type}`, type);
+                    } else if (typeof window.showToast === 'function') {
+                        window.showToast(`Toast global de tipo: ${type}`, type);
+                    } else {
+                        alert(`Toast ${type}: Não disponível`);
+                    }
+                }, 500 * types.indexOf(type));
+            });
+        }
+        
+        function testUIExists() {
+            console.log('=== Teste UI ===');
+            console.log('UI:', typeof UI);
+            if (typeof UI !== 'undefined') {
+                console.log('UI instanciado:', UI instanceof UI);
+                console.log('UI métodos:', Object.keys(UI));
+                console.log('UI.showToast:', typeof UI.showToast);
+            }
+        }
+        
+        function testUIFunctions() {
+            console.log('=== Teste Funções UI ===');
+            const functions = ['showToast', 'startTuner', 'stopTuner', 'updateTunerDisplay'];
+            functions.forEach(func => {
+                const exists = typeof UI !== 'undefined' && typeof UI[func] === 'function';
+                console.log(`${func}:`, exists ? '✅ Disponível' : '❌ Indisponível');
+            });
+        }
+        
+        function openConsole() {
+            console.log('Console aberto para depuração');
+            alert('Pressione F12 para abrir o console do navegador e ver mensagens detalhadas.');
+        }
+        
+        // Executa testes automáticos ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkModules();
+                testToast();
+                testGlobalToast();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

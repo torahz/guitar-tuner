@@ -840,24 +840,48 @@ class UI {
      * Exibe toast
      */
     showToast(message, type = 'info', duration = 3000) {
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        
-        this.elements.toastContainer.appendChild(toast);
-        
-        // Animação de entrada
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        // Remoção automática
-        setTimeout(() => {
-            toast.classList.remove('show');
+        try {
+            if (!this.elements.toastContainer) {
+                console.warn('Toast container não encontrado, criando temporariamente');
+                this.createToastContainer();
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            this.elements.toastContainer.appendChild(toast);
+            
+            // Animação de entrada
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remoção automática
             setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 300);
-        }, duration);
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, duration);
+        } catch (error) {
+            console.error('Erro ao exibir toast:', error);
+            // Fallback: usar alert para mensagens críticas
+            if (type === 'error') {
+                alert('Erro: ' + message);
+            }
+        }
+    }
+    
+    /**
+     * Cria container de toast se não existir
+     */
+    createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+        this.elements.toastContainer = container;
     }
 
     /**
@@ -895,6 +919,19 @@ class UI {
             // Pode ser expandido para retomar detecção
         }
     }
+}
+
+// Garantir que showToast esteja disponível globalmente
+if (typeof window.UI !== 'undefined' && typeof window.UI.showToast === 'function') {
+    window.showToast = window.UI.showToast.bind(window.UI);
+} else {
+    // Fallback global seguro
+    window.showToast = function(message, type = 'info', duration = 3000) {
+        console.log(`[Toast ${type}]: ${message}`);
+        if (type === 'error') {
+            alert('Erro: ' + message);
+        }
+    };
 }
 
 // Export singleton instance

@@ -145,12 +145,12 @@ class App {
         // Evento de online/offline
         window.addEventListener('online', () => {
             this.isOnline = true;
-            UI.showToast('Conexão restaurada', 'success');
+            this.showToast('Conexão restaurada', 'success');
         });
         
         window.addEventListener('offline', () => {
             this.isOnline = false;
-            UI.showToast('Sem conexão com internet', 'warning');
+            this.showToast('Sem conexão com internet', 'warning');
         });
         
         // Evento de erro não capturado
@@ -224,7 +224,7 @@ class App {
                         const { outcome } = await deferredPrompt.userChoice;
                         
                         if (outcome === 'accepted') {
-                            UI.showToast('App instalado com sucesso!', 'success');
+                            this.showToast('App instalado com sucesso!', 'success');
                             installBtn.style.display = 'none';
                         }
                         
@@ -235,7 +235,7 @@ class App {
         });
         
         window.addEventListener('appinstalled', () => {
-            UI.showToast('App instalado com sucesso!', 'success');
+            this.showToast('App instalado com sucesso!', 'success');
         });
     }
 
@@ -251,16 +251,47 @@ class App {
             const daysSinceLastUse = Math.floor((now - lastUsed) / (1000 * 60 * 60 * 24));
             
             if (daysSinceLastUse === 0) {
-                UI.showToast('Bem-vindo de volta!', 'success');
+                this.showToast('Bem-vindo de volta!', 'success');
             } else if (daysSinceLastUse === 1) {
-                UI.showToast('Bom te ver de novo!', 'success');
+                this.showToast('Bom te ver de novo!', 'success');
             } else if (daysSinceLastUse < 7) {
-                UI.showToast(`Bem-vindo de volta! Última visita: ${Utils.formatDate(lastUsed)}`, 'success');
+                this.showToast(`Bem-vindo de volta! Última visita: ${Utils.formatDate(lastUsed)}`, 'success');
             } else {
-                UI.showToast(`Bem-vindo de volta! Sentimos sua falta!`, 'success');
+                this.showToast(`Bem-vindo de volta! Sentimos sua falta!`, 'success');
             }
         } else {
-            UI.showToast('Bem-vindo ao Afinador Pro!', 'success');
+            this.showToast('Bem-vindo ao Afinador Pro!', 'success');
+        }
+    }
+    
+    /**
+     * Função de toast robusta (fallback para UI.showToast)
+     */
+    showToast(message, type = 'info', duration = 3000) {
+        // Tenta usar UI.showToast primeiro
+        if (typeof UI !== 'undefined' && typeof UI.showToast === 'function') {
+            try {
+                UI.showToast(message, type, duration);
+                return;
+            } catch (error) {
+                console.warn('UI.showToast falhou:', error);
+            }
+        }
+        
+        // Tenta usar window.showToast global
+        if (typeof window.showToast === 'function') {
+            try {
+                window.showToast(message, type, duration);
+                return;
+            } catch (error) {
+                console.warn('window.showToast falhou:', error);
+            }
+        }
+        
+        // Fallback: usar console.log + alert para erros críticos
+        console.log(`[Toast ${type}]: ${message}`);
+        if (type === 'error') {
+            alert('Erro: ' + message);
         }
     }
 
@@ -292,7 +323,7 @@ class App {
             return;
         }
         
-        UI.showToast('Ocorreu um erro inesperado', 'error');
+        this.showToast('Ocorreu um erro inesperado', 'error');
     }
 
     /**
