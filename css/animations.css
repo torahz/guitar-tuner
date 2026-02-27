@@ -1,0 +1,630 @@
+/* Animation System */
+
+/* Keyframes */
+
+/* Spin Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+    50% { 
+        opacity: 0.5; 
+        transform: scale(1.05); 
+    }
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Fade In/Out */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+@keyframes fadeInDown {
+    from { 
+        opacity: 0; 
+        transform: translateY(-30px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* Slide Animations */
+@keyframes slideInLeft {
+    from { 
+        opacity: 0; 
+        transform: translateX(-100%); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes slideInRight {
+    from { 
+        opacity: 0; 
+        transform: translateX(100%); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes slideInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(100%); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideInDown {
+    from { 
+        opacity: 0; 
+        transform: translateY(-100%); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Scale Animations */
+@keyframes scaleIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+@keyframes scaleOut {
+    from { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+    to { 
+        opacity: 0; 
+        transform: scale(0.8); 
+    }
+}
+
+@keyframes scalePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Rotate Animations */
+@keyframes rotateIn {
+    from { 
+        opacity: 0; 
+        transform: rotate(-90deg) scale(0.5); 
+    }
+    to { 
+        opacity: 1; 
+        transform: rotate(0deg) scale(1); 
+    }
+}
+
+@keyframes rotateOut {
+    from { 
+        opacity: 1; 
+        transform: rotate(0deg) scale(1); 
+    }
+    to { 
+        opacity: 0; 
+        transform: rotate(90deg) scale(0.5); 
+    }
+}
+
+/* Wave Animation for Gauge */
+@keyframes wave {
+    0% { stroke-dashoffset: 1130; }
+    50% { stroke-dashoffset: 565; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* Tuner-Specific Animations */
+
+/* Needle Animation */
+.needle {
+    animation: scaleIn var(--transition-normal) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.needle.in-tune {
+    animation: scalePulse 1s ease-in-out infinite;
+}
+
+.needle.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Gauge Animation */
+.gauge-progress {
+    animation: wave 2s ease-in-out infinite;
+}
+
+.gauge-progress.active {
+    animation: none;
+    transition: stroke-dashoffset var(--transition-normal) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Tuner Display Animations */
+.tuner-display {
+    animation: fadeInUp var(--transition-normal);
+}
+
+.tuner-display.in-tune {
+    animation: pulse 2s infinite;
+}
+
+.tuner-display.out-of-tune {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Center Info Animations */
+.tuner-center {
+    animation: scaleIn var(--transition-normal);
+}
+
+.note-display {
+    animation: bounce var(--transition-normal);
+}
+
+.frequency-display {
+    animation: fadeIn var(--transition-normal);
+}
+
+.cents-display {
+    animation: fadeIn var(--transition-normal);
+}
+
+/* Status Indicators */
+.status-item {
+    animation: fadeInDown var(--transition-normal);
+}
+
+.status-item.active {
+    animation: pulse 2s infinite;
+}
+
+/* Controls Animations */
+.control-group {
+    animation: slideInUp var(--transition-normal);
+}
+
+.instrument-btn, .tuning-btn, .string-btn {
+    animation: scaleIn var(--transition-normal);
+}
+
+.instrument-btn:hover, .tuning-btn:hover, .string-btn:hover {
+    animation: scalePulse 0.3s ease-in-out;
+}
+
+.instrument-btn.active, .tuning-btn.active, .string-btn.active {
+    animation: bounce 0.5s ease-in-out;
+}
+
+/* Buttons */
+.btn {
+    animation: scaleIn var(--transition-normal);
+}
+
+.btn:hover {
+    animation: scalePulse 0.3s ease-in-out;
+}
+
+.btn:active {
+    animation: scaleOut 0.1s ease-in-out;
+}
+
+.btn-primary:active {
+    animation: scaleOut 0.1s ease-in-out;
+}
+
+/* Settings Panel */
+.settings-panel {
+    animation: slideInDown var(--transition-normal);
+}
+
+.settings-card {
+    animation: fadeInUp var(--transition-normal);
+}
+
+.setting-item {
+    animation: slideInLeft var(--transition-normal);
+}
+
+/* History Section */
+.history-section {
+    animation: fadeInUp var(--transition-normal);
+}
+
+.history-item {
+    animation: slideInRight var(--transition-normal);
+}
+
+.history-item.new {
+    animation: bounce 0.5s ease-in-out;
+}
+
+/* Toast Messages */
+.toast {
+    animation: slideInRight var(--transition-normal);
+}
+
+.toast.show {
+    animation: fadeIn var(--transition-normal);
+}
+
+.toast.hide {
+    animation: fadeOut var(--transition-normal);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    animation: fadeIn var(--transition-normal);
+}
+
+.loading-overlay.active {
+    animation: fadeIn var(--transition-normal);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    animation: rotateIn var(--transition-normal);
+}
+
+.theme-toggle.active {
+    animation: rotateOut var(--transition-normal);
+}
+
+/* Utility Animation Classes */
+
+/* Entrance Animations */
+.animate-fade-in {
+    animation: fadeIn var(--transition-normal);
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp var(--transition-normal);
+}
+
+.animate-fade-in-down {
+    animation: fadeInDown var(--transition-normal);
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft var(--transition-normal);
+}
+
+.animate-slide-in-right {
+    animation: slideInRight var(--transition-normal);
+}
+
+.animate-slide-in-up {
+    animation: slideInUp var(--transition-normal);
+}
+
+.animate-slide-in-down {
+    animation: slideInDown var(--transition-normal);
+}
+
+.animate-scale-in {
+    animation: scaleIn var(--transition-normal);
+}
+
+.animate-rotate-in {
+    animation: rotateIn var(--transition-normal);
+}
+
+/* Exit Animations */
+.animate-fade-out {
+    animation: fadeOut var(--transition-normal);
+}
+
+.animate-slide-out-left {
+    animation: slideInRight var(--transition-normal);
+}
+
+.animate-slide-out-right {
+    animation: slideInLeft var(--transition-normal);
+}
+
+.animate-slide-out-up {
+    animation: slideInDown var(--transition-normal);
+}
+
+.animate-slide-out-down {
+    animation: slideInUp var(--transition-normal);
+}
+
+.animate-scale-out {
+    animation: scaleOut var(--transition-normal);
+}
+
+.animate-rotate-out {
+    animation: rotateOut var(--transition-normal);
+}
+
+/* Continuous Animations */
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-scale-pulse {
+    animation: scalePulse 1s ease-in-out infinite;
+}
+
+/* Interaction Animations */
+.interactive:hover {
+    animation: scalePulse 0.3s ease-in-out;
+}
+
+.interactive:active {
+    animation: scaleOut 0.1s ease-in-out;
+}
+
+/* Performance Optimizations */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+
+.will-change-both {
+    will-change: transform, opacity;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .needle {
+        transition: none !important;
+    }
+    
+    .loading-spinner {
+        animation: none !important;
+    }
+}
+
+/* High Performance Animations */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Custom Easing Functions */
+.ease-custom {
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ease-spring {
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ease-bounce {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.ease-elastic {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.ease-back {
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Layered Animations */
+.layer-1 {
+    animation-delay: 0.1s;
+}
+
+.layer-2 {
+    animation-delay: 0.2s;
+}
+
+.layer-3 {
+    animation-delay: 0.3s;
+}
+
+.layer-4 {
+    animation-delay: 0.4s;
+}
+
+.layer-5 {
+    animation-delay: 0.5s;
+}
+
+/* Staggered Animations */
+.stagger-children > * {
+    animation: fadeInUp var(--transition-normal);
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.9s; }
+.stagger-children > *:nth-child(10) { animation-delay: 1.0s; }
+
+/* Responsive Animation Delays */
+@media (max-width: 768px) {
+    .stagger-children > * {
+        animation-delay: 0s !important;
+    }
+}
+
+/* Focus and Accessibility Animations */
+.focus-ring:focus-visible {
+    animation: scalePulse 0.3s ease-in-out;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+    animation: scalePulse 1s infinite;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-top: 2px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+/* Success and Error States */
+.success {
+    animation: scaleIn var(--transition-normal);
+}
+
+.error {
+    animation: shake 0.5s ease-in-out;
+}
+
+.warning {
+    animation: pulse 1s infinite;
+}
+
+/* Interactive Feedback */
+.clickable:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-in-out;
+}
+
+.draggable:active {
+    cursor: grabbing;
+    animation: scalePulse 0.2s ease-in-out;
+}
+
+/* Scroll Animations */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.scroll-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Parallax Effects */
+.parallax {
+    transform: translateY(0);
+    transition: transform var(--transition-normal);
+}
+
+.parallax:hover {
+    transform: translateY(-5px);
+}
+
+/* Depth and Layering */
+.depth-1 {
+    z-index: 1;
+    animation: fadeInUp var(--transition-normal);
+}
+
+.depth-2 {
+    z-index: 2;
+    animation: fadeInUp var(--transition-normal);
+    animation-delay: 0.1s;
+}
+
+.depth-3 {
+    z-index: 3;
+    animation: fadeInUp var(--transition-normal);
+    animation-delay: 0.2s;
+}
+
+.depth-4 {
+    z-index: 4;
+    animation: fadeInUp var(--transition-normal);
+    animation-delay: 0.3s;
+}
+
+.depth-5 {
+    z-index: 5;
+    animation: fadeInUp var(--transition-normal);
+    animation-delay: 0.4s;
+}

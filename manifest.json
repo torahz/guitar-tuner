@@ -1,21 +1,111 @@
 {
-  "name": "Afinador Cromático",
-  "short_name": "Afinador",
-  "description": "Um afinador cromático para violões e guitarras",
-  "start_url": "https://torahz.github.io/guitar-tuner/",
+  "name": "Afinador Pro - Cromático Profissional",
+  "short_name": "Afinador Pro",
+  "description": "Afinador cromático profissional com detecção automática de notas, modos de instrumento e calibração avançada",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#F2F2DB",
-  "theme_color": "#F2F2DB",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "scope": "/",
+  "categories": ["utilities", "productivity", "music"],
+  "lang": "pt-BR",
+  "dir": "ltr",
   "icons": [
     {
-      "src": "icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icons/screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tela principal do afinador"
+    },
+    {
+      "src": "assets/icons/screenshot2.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Interface mobile do afinador"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Iniciar Afinador",
+      "short_name": "Iniciar",
+      "description": "Inicia o afinador imediatamente",
+      "url": "/",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Configurações",
+      "short_name": "Config",
+      "description": "Acessa as configurações avançadas",
+      "url": "/#settings",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
 }

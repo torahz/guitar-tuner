@@ -1,0 +1,407 @@
+/* Theme System */
+
+/* Light Theme (Default) */
+:root {
+    /* Light Theme Colors */
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-primary-light: #93c5fd;
+    --color-secondary: #64748b;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #3b82f6;
+    
+    /* Text Colors */
+    --color-text: #1e293b;
+    --color-text-secondary: #64748b;
+    --color-text-muted: #94a3b8;
+    --color-text-inverse: #ffffff;
+    
+    /* Background Colors */
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f8fafc;
+    --color-bg-tertiary: #f1f5f9;
+    --color-bg-inverse: #1e293b;
+    
+    /* Surface Colors */
+    --color-surface: #ffffff;
+    --color-surface-hover: #f1f5f9;
+    --color-surface-active: #e2e8f0;
+    --color-surface-elevated: #ffffff;
+    
+    /* Border Colors */
+    --color-border: #e2e8f0;
+    --color-border-strong: #cbd5e1;
+    --color-border-focus: #93c5fd;
+    
+    /* Shadow Colors */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Status Colors */
+    --color-status-online: #10b981;
+    --color-status-idle: #f59e0b;
+    --color-status-dnd: #ef4444;
+    --color-status-offline: #64748b;
+    
+    /* Gradient Colors */
+    --gradient-primary: linear-gradient(135deg, #2563eb, #1d4ed8);
+    --gradient-success: linear-gradient(135deg, #10b981, #059669);
+    --gradient-warning: linear-gradient(135deg, #f59e0b, #d97706);
+    --gradient-danger: linear-gradient(135deg, #ef4444, #dc2626);
+    
+    /* Tuner Specific Colors */
+    --color-tuner-bg: #ffffff;
+    --color-tuner-border: #e2e8f0;
+    --color-tuner-needle: #ef4444;
+    --color-tuner-needle-gradient: linear-gradient(to bottom, #ef4444, #f59e0b, #10b981);
+    --color-tuner-gauge-track: #e2e8f0;
+    --color-tuner-gauge-progress: #2563eb;
+    --color-tuner-center-bg: rgba(255, 255, 255, 0.9);
+    --color-tuner-note: #1e293b;
+    --color-tuner-frequency: #64748b;
+    --color-tuner-cents: #94a3b8;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    /* Dark Theme Colors */
+    --color-primary: #60a5fa;
+    --color-primary-dark: #3b82f6;
+    --color-primary-light: #93c5fd;
+    --color-secondary: #94a3b8;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #60a5fa;
+    
+    /* Text Colors */
+    --color-text: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-muted: #64748b;
+    --color-text-inverse: #111827;
+    
+    /* Background Colors */
+    --color-bg: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-bg-inverse: #f1f5f9;
+    
+    /* Surface Colors */
+    --color-surface: #111827;
+    --color-surface-hover: #1f2937;
+    --color-surface-active: #334155;
+    --color-surface-elevated: #0b1220;
+    
+    /* Border Colors */
+    --color-border: #334155;
+    --color-border-strong: #475569;
+    --color-border-focus: #60a5fa;
+    
+    /* Shadow Colors */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    
+    /* Status Colors */
+    --color-status-online: #34d399;
+    --color-status-idle: #fbbf24;
+    --color-status-dnd: #f87171;
+    --color-status-offline: #94a3b8;
+    
+    /* Gradient Colors */
+    --gradient-primary: linear-gradient(135deg, #60a5fa, #3b82f6);
+    --gradient-success: linear-gradient(135deg, #34d399, #10b981);
+    --gradient-warning: linear-gradient(135deg, #fbbf24, #f59e0b);
+    --gradient-danger: linear-gradient(135deg, #f87171, #ef4444);
+    
+    /* Tuner Specific Colors */
+    --color-tuner-bg: #111827;
+    --color-tuner-border: #334155;
+    --color-tuner-needle: #f87171;
+    --color-tuner-needle-gradient: linear-gradient(to bottom, #f87171, #fbbf24, #34d399);
+    --color-tuner-gauge-track: #334155;
+    --color-tuner-gauge-progress: #60a5fa;
+    --color-tuner-center-bg: rgba(17, 24, 39, 0.9);
+    --color-tuner-note: #f1f5f9;
+    --color-tuner-frequency: #94a3b8;
+    --color-tuner-cents: #64748b;
+}
+
+/* System Theme Detection */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        /* Dark theme variables will be applied automatically */
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        /* Light theme variables will be applied automatically */
+    }
+}
+
+/* Theme Transitions */
+:root {
+    color-scheme: light dark;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+/* Theme-Specific Components */
+
+/* Buttons */
+.btn-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover {
+    background: #475569;
+    border-color: #475569;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+.btn-ghost:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Cards & Surfaces */
+.card, .settings-card, .tuner-display, .controls-section, .history-section {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.card:hover, .settings-card:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Inputs & Forms */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], 
+select, textarea {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, 
+input[type="number"]:focus, select:focus, textarea:focus {
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    outline: none;
+}
+
+/* Switches */
+.switch input:checked + .slider {
+    background-color: var(--color-primary);
+}
+
+/* Progress Bars */
+.progress-bar {
+    background: var(--color-border);
+}
+
+.progress-bar .progress-fill {
+    background: var(--color-primary);
+}
+
+/* Status Indicators */
+.status-item {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.status-item.active {
+    background: var(--color-success);
+    color: white;
+    border-color: var(--color-success);
+}
+
+/* Tuner Specific */
+.tuner-display {
+    background: var(--color-tuner-bg);
+    border-color: var(--color-tuner-border);
+}
+
+.gauge-track {
+    stroke: var(--color-tuner-gauge-track);
+}
+
+.gauge-progress {
+    stroke: var(--color-tuner-gauge-progress);
+}
+
+.needle {
+    background: var(--color-tuner-needle-gradient);
+}
+
+.tuner-center {
+    background: var(--color-tuner-center-bg);
+    border-color: var(--color-tuner-border);
+    color: var(--color-tuner-note);
+}
+
+.note-name {
+    color: var(--color-tuner-note);
+}
+
+.frequency-display {
+    color: var(--color-tuner-frequency);
+}
+
+.cents-display {
+    color: var(--color-tuner-cents);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+.theme-toggle:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Loading States */
+.loading-overlay {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.loading-spinner {
+    border-color: var(--color-border);
+    border-top-color: var(--color-primary);
+}
+
+/* Toast Messages */
+.toast {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+.toast.success {
+    border-left-color: var(--color-success);
+}
+
+.toast.warning {
+    border-left-color: var(--color-warning);
+}
+
+.toast.error {
+    border-left-color: var(--color-danger);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+}
+
+/* Focus States */
+*:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-border: #000000;
+        --color-text: #000000;
+        --color-bg: #ffffff;
+    }
+    
+    [data-theme="dark"] {
+        --color-border: #ffffff;
+        --color-text: #ffffff;
+        --color-bg: #000000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-fast: 0ms;
+        --transition-normal: 0ms;
+        --transition-slow: 0ms;
+    }
+    
+    .needle {
+        transition: none !important;
+    }
+    
+    .loading-spinner {
+        animation: none !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    :root {
+        --color-bg: #ffffff;
+        --color-text: #000000;
+        --color-border: #000000;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .header, .footer, .controls-section, .settings-panel, .history-section {
+        display: none !important;
+    }
+    
+    .tuner-display {
+        box-shadow: none !important;
+        border: 1px solid #000000 !important;
+    }
+}
